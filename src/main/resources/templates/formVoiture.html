@@ -1,0 +1,62 @@
+<!--<%@ page language="java" contentType="text/html; charset=windows-1256"
+ pageEncoding="windows-1256"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template">
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<c:url value="/css/main.css" var="jstlCss" />
+<link href="${jstlCss}" rel="stylesheet" />
+<script type="text/javascript"
+src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
+<title>Ajouter Voiture</title>
+</head>
+<body>
+	<div layout:fragment="Mycontent">
+<div class="container mt-5" >
+<div class="card">
+ <div class="card-header" th:if="${mode=='new'}"> Ajout des Voitures </div>
+ <div class="card-header" th:if="${mode=='edit'}">Modification des Voitures</div>
+</div>
+
+<div class="card-body">
+<form action="@{saveVoiture}" method="post">
+ <div class="form-group">
+ <label class="control-label">Nom Voiture :</label>
+ <input type="text" name="modeleVoiture" class="form-control"/>
+ </div>
+ <div class="form-group">
+ <label class="control-label">Prix Voiture :</label>
+ <input type="text" name="prixVoiture" class="form-control"/>
+ </div>
+ <div class="form-group">
+ <label class="control-label">date fabrication :</label>
+ <input type="date" name="date" class="form-control"/>
+ </div>
+ <div class="form-group">
+  <label class="control-label">Marque :</label>
+	  <select name="Marque">
+		  <option value=""></option>
+		  <option th:each="marque : ${marques}"
+		          th:value="${marque.idMarque}"
+		          th:text="${marque.nomMarque}"></option>
+		</select>
+
+</div>
+
+
+ <div>
+ <button type="submit" class="btn btn-primary">Ajouter</button>
+</div>
+</form>
+</div>
+<!--${msg}-->
+<br/>
+<br/>
+<!--<a href="ListeProduits">Liste Produits</a>-->
+</div></div></body>
+</html>
