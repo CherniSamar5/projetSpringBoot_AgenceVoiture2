@@ -35,21 +35,54 @@ public class VoitureController {
 	@RequestMapping("/showCreateVoiture")
 	public String showCreate(ModelMap modelMap)
 	{
-	modelMap.addAttribute("voiture", new Voiture());
-	modelMap.addAttribute("mode", "new");
+		List<Marque> marques = marqueService.getAllMarque();
+		modelMap.addAttribute("marques", marques);
+		modelMap.addAttribute("voiture", new Voiture());
+		modelMap.addAttribute("mode", "new");
+
 	return "formVoiture";
 	}
 
+//	public String showCreate(ModelMap modelMap)
+//	{
+//		List<Marque> marques = marqueService.getAllMarque();
+//		modelMap.addAttribute("marques", marques);
+//		return "createVoiture";
+//	}
+	
+
 	
 	@RequestMapping("/saveVoiture")
-	public String saveProduit(@Valid Voiture voiture,
-			 BindingResult bindingResult)
-			{
-			if (bindingResult.hasErrors()) return "formVoiture";
+	public String saveVoiture(@Valid Voiture voiture,
+			 BindingResult bindingResult ,ModelMap modelMap)
+	{
+		List<Marque> marques = marqueService.getAllMarque();
+		modelMap.addAttribute("marques", marques);
+		if (bindingResult.hasErrors()) return "formVoiture";
 
-			voitureService.saveVoiture(voiture);
-			return "formVoiture";
-			}
+		voitureService.saveVoiture(voiture);
+		return "formVoiture";
+	}
+//	public String saveVoiture(@ModelAttribute("voiture") Voiture voiture, @RequestParam("date") String date,
+//			ModelMap modelMap,
+//			@RequestParam (name="page",defaultValue = "0") int page,
+//			@RequestParam (name="size", defaultValue = "2") int size) throws ParseException
+//	{
+//		//conversion de la date
+//		 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+//		 Date dateFabrication = dateformat.parse(String.valueOf(date));
+//		 voiture.setDateFabrication(dateFabrication);
+//	
+//		Voiture saveVoiture = voitureService.saveVoiture(voiture);
+//		String msg ="voiture enregistrée avec Id "+saveVoiture.getIdVoiture();
+//		modelMap.addAttribute("msg", msg);
+//		
+//		Page<Voiture> voits = voitureService.getAllVoituresParPage(page, size);
+//		modelMap.addAttribute("voitures", voits);
+//		modelMap.addAttribute("pages", new int[voits.getTotalPages()]);
+//		modelMap.addAttribute("currentPage", page);
+//		
+//		return "listeVoitures";}
 
 	
 	@RequestMapping("/ListeVoitures")
@@ -81,12 +114,26 @@ public class VoitureController {
 	@RequestMapping("/modifierVoiture")
 	public String editerProduit(@RequestParam("id") Long id,ModelMap modelMap)
 	{
-		Voiture v = voitureService.getVoiture(id);
-		modelMap.addAttribute("voiture", v);
-		modelMap.addAttribute("mode", "edit");
-		return "formVoiture";
+		List<Marque> marqs = marqueService.getAllMarque();
+	modelMap.addAttribute("marques",marqs);
+	Voiture v= voitureService.getVoiture(id);
+	modelMap.addAttribute("voiture", v);
+	modelMap.addAttribute("mode", "edit");
+	return "formVoiture";
 	}
 
+//	public String editerVoiture(@RequestParam("id") Long id,ModelMap modelMap  
+//			//,@RequestParam("page") int page
+//			)
+//	{
+//		Voiture v= 	voitureService.getVoiture(id);
+//		modelMap.addAttribute("voiture", v);	
+//		List<Marque> marqs = marqueService.getAllMarque();
+//		modelMap.addAttribute("marques",marqs);
+//		//modelMap.addAttribute("currentPage",page);
+//
+//		return "editerVoiture";	
+//	}
 	@RequestMapping("/updateVoiture")
 	public String updateVoiture(@ModelAttribute("voiture") Voiture voiture,
 								@RequestParam("date") String date,
@@ -106,6 +153,7 @@ public class VoitureController {
 		
 		return "listeVoitures";
 	}
+	
 	}
 
 

@@ -8,7 +8,7 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 import com.samar.voitures.entities.Marque;
 import com.samar.voitures.entities.Voiture;
 
-@RepositoryRestController("rest_Voitures")
+//@RepositoryRestController("rest_Voitures")
 public interface VoitureRepository extends JpaRepository <Voiture, Long>{
 	List<Voiture> findByModeleVoiture(String nom);
 	List<Voiture> findByModeleVoitureContains(String nom);

@@ -23,6 +23,7 @@ public class Voiture {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idVoiture;
 	
+	
 	@NotNull
 	@Size (min = 4,max = 15)
 	private String modeleVoiture;

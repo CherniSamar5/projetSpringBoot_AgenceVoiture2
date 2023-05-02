@@ -28,13 +28,18 @@ public class MarqueController {
 	
 	@RequestMapping("/saveMarque")
 	public String saveMarque(@ModelAttribute("marque") Marque maqrue,
-			ModelMap modelMap)
+			ModelMap modelMap,@RequestParam (name="page",defaultValue = "0") int page,
+			@RequestParam (name="size", defaultValue = "2") int size)
 	{
 		
 		Marque saveMarque = marqueService.saveMarque(maqrue);
 		String msg ="marque enregistrée avec Id "+saveMarque.getIdMarque();
 		modelMap.addAttribute("msg", msg);
-		return "createMarque";
+		Page<Marque> marqs = marqueService.getAllMarquesParPage(page, size);
+		modelMap.addAttribute("marques", marqs);
+		modelMap.addAttribute("pages", new int[marqs.getTotalPages()]);
+		modelMap.addAttribute("currentPage", page);
+		return "listeMarques";
 	}
 	
 	@RequestMapping("/ListeMarques")
